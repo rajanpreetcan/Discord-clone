@@ -11,7 +11,7 @@ datasource db {
 model Profile {
   id String @id @default(uuid())
   userId String @unique
-  name String
+  name String 
   imageUrl String 
   email String
   createdAt DateTime @default(now())
