@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
+import { useEffect, useState } from "react"
 const formSchema = z.object({
     name: z.string().min(1, {
         message: "server name is required"
@@ -16,6 +17,11 @@ const formSchema = z.object({
 })
 export const InitialModal = () => {
 
+    const [mounted, isMounted] = useState(false);
+
+    useEffect(()=>{
+        isMounted(true)
+    },[])
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -30,6 +36,9 @@ export const InitialModal = () => {
         console.log(values)
     }
 
+    if(!mounted){
+        return null
+    }
     return (
         <Dialog open>
             <DialogContent className="bg-white text-black p-0-overflow-hidden">
@@ -56,7 +65,7 @@ export const InitialModal = () => {
                                         server name
                                         </FormLabel>
                                         <FormControl>
-                                            <Input className="bg-zinc-500" />
+                                            <Input className="bg-zinc-300/50" />
                                         </FormControl>
                                         <FormMessage/>
                                     </FormItem>
@@ -64,7 +73,7 @@ export const InitialModal = () => {
                             />
                         </div>
                         <DialogFooter className="bg-gray-100 px-6 py-4">
-                                <Button variant="link" disabled={isLoading}>
+                                <Button variant="primary" disabled={isLoading}>
                                     create
                                 </Button>
                         </DialogFooter>
